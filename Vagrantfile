@@ -31,6 +31,15 @@ Vagrant.configure("2") do |config|
       m.vm.provision "shell", inline:<<-SHELL
       #{host_check($IPs)}
       SHELL
+      m.vm.provision "shell", inline:<<-SHELL
+      sudo apt install apache2 libapache2-mod-proxy-html rsync curl
+      sudo rsync -avz /vagrant/etc/ssl/ /etc/ssl/
+      sudo rsync -avz /vagrant/etc/apache2/ /etc/apache2/
+      sudo rsync -avz /vagrant/var/ /var/
+      sudo service apache2  restart
+      echo '#{$IPs[k]} www.example.com' | sudo tee -a /etc/hosts
+      echo '#{$IPs[k]} www.sample.com' | sudo tee -a /etc/hosts
+      SHELL
     end
   end
 end
