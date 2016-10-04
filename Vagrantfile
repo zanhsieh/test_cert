@@ -32,7 +32,9 @@ Vagrant.configure("2") do |config|
       #{host_check($IPs)}
       SHELL
       m.vm.provision "shell", inline:<<-SHELL
-      sudo apt install apache2 libapache2-mod-proxy-html rsync curl
+      sudo apt update
+      sudo apt -y upgrade
+      sudo apt -y install apache2 libapache2-mod-proxy-html rsync curl
       sudo rsync -avz /vagrant/etc/ssl/ /etc/ssl/
       sudo rsync -avz /vagrant/etc/apache2/ /etc/apache2/
       sudo rsync -avz /vagrant/var/ /var/
